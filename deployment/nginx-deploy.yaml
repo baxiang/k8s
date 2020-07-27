@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+# 类型，如：Pod/Deployment/Service/Ingress
+kind: Deployment
+metadata: 
+    name: nginx-app
+spec:
+    selector:
+        matchLabels:
+            app: nginx  # 容器标签的名字，发布 Service 时，selector 需要和这里对应
+    replicas: 2 # 部署的容器数量
+    template:
+        metadata:
+            labels:
+                app: nginx
+        spec:
+            # 配置容器 注意数组类型 说明可以配置多个容器
+            containers:
+            - name: nginx
+            # 容器镜像
+              image: nginx:1.8
+              ports:
+              - containerPort: 80
+
+    
+    
