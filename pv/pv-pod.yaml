@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-pod
+spec:
+  volumes: # 为 Pod 设置卷
+    - name: pv-storage # 卷名
+      persistentVolumeClaim: # 引用 PVC 的名称
+        claimName: pv-claim
+  containers:
+    - name: pv-container
+      image: nginx:1.7.9
+      ports:
+        - containerPort: 80
+          name: 'http-server'
+      volumeMounts: # 将卷挂载到容器中的 /usr/share/nginx/html 路径下
+        - mountPath: '/usr/share/nginx/html'
+          name: pv-storage
