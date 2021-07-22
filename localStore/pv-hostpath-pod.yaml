@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-hostpath-pod
+  labels:
+    name: myapp
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k8s-node1
+  volumes:
+    - name: pvc-hostpath
+      persistentVolumeClaim:
+        claimName: pvc-hostpath
+  containers:
+  - name: nginx
+    image: nginx:1.14
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+    volumeMounts:
+      - mountPath: /usr/share/nginx/html
+        name: pvc-hostpath
+    

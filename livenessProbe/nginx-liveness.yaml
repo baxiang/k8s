@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-liveness
+  labels:
+    name: nginx-liveness
+spec:
+  containers:
+  - name: nginx-liveness
+    image: nginx:1.14
+    lifecycle:
+      postStart:
+        exec:
+          command: ["/bin/sh","-c","echo OK > /usr/share/nginx/html/health"]
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+    livenessProbe:
+      httpGet:
+        port: 80
+        path: /health
